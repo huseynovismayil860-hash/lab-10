@@ -1,0 +1,46 @@
+// Filter duymelerinin isi
+function filter(type, btn) {
+    // Butun duymelerden active classi sil
+    document.querySelectorAll('.filter-btn').forEach(function(b) {
+        b.classList.remove('active');
+    });
+
+    // Tiklanilan duymeyе active class elave et
+    btn.classList.add('active');
+
+    // Kartlari filter et
+    document.querySelectorAll('.card').forEach(function(card) {
+        if (type === 'all' || card.dataset.type === type) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+// Kart uzerine tiklananda detallar acilir
+document.querySelectorAll('.card').forEach(function(card) {
+    card.addEventListener('click', function() {
+        var title = card.querySelector('.card-title').textContent;
+        var year  = card.querySelector('.year').textContent;
+        var desc  = card.querySelector('.card-desc').textContent;
+        var type  = card.querySelector('.type').textContent;
+
+        document.getElementById('modal-title').textContent = title;
+        document.getElementById('modal-year').textContent  = year + ' • ' + type;
+        document.getElementById('modal-desc').textContent  = desc;
+        document.getElementById('modal').style.display     = 'flex';
+    });
+});
+
+// Modali bagla
+document.getElementById('modal-close').addEventListener('click', function() {
+    document.getElementById('modal').style.display = 'none';
+});
+
+// Modal xaricine tiklananda bagla
+document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.style.display = 'none';
+    }
+});
